@@ -1,0 +1,34 @@
+
+.panel_wide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.day {
+  border: solid;
+  border-width: 1px;
+  border-radius: 1px;
+  border-color: rgb(233, 232, 232);
+  width: 120px;
+  height: 170px;
+}
+
+.grey {
+  background-color: lightgrey;
+}
+
+.row {
+  display: flex;
+  text-align: center;
+  justify-content: space-evenly;
+  padding-bottom: 1px;
+}
+
+.grey_text {
+  color:rgb(151, 151, 151);
+}
+
+.daypane {
+  max-width: 100%;
+}
