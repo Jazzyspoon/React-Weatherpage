@@ -4,6 +4,7 @@ export default class WeatherDay1 extends React.Component {
   state = {
     weather: [],
   };
+  //kelvin to far convertor
   ktoFConverter(k) {
     let f = (k - 273.15) * 1.8 + 32;
     return Math.round(f);
