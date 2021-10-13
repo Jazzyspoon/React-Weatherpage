@@ -4,4 +4,4 @@ If you should wish to clone this, run 'npm install' and then 'npm start'.  It sh
 
 This uses React 17, JS, HTML, and CSS.
 
-<img src="https://github.com/Jazzyspoon/React-Weatherpage/blob/master/src/components/images/Screen%20Shot%202021-09-30%20at%2010.47.24%20PM.png"></img>
+<img src="https://github.com/Jazzyspoon/React-Weatherpage/blob/master/src/components/images/updated%20look.JPG"></img>
