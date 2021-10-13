@@ -1,3 +1,4 @@
+import React from "react";
 import "./daypanel.css";
 import WeatherDay1 from "../Dayweather/weatherday1";
 import WeatherDay2 from "../Dayweather/weatherday2";
