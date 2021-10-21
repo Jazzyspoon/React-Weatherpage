@@ -10,6 +10,8 @@
   border-radius: 10px;
   width: 120px;
   height: 170px;
+  margin-right: 5px;
+  margin-bottom: 5px;
 }
 
 h5 {
@@ -21,6 +23,10 @@ h5 {
 
 .row {
   display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 0;
+  margin: 0;
   text-align: center;
   justify-content: space-evenly;
   padding-bottom: 1px;
@@ -30,6 +36,9 @@ h5 {
   color: rgb(151, 151, 151);
 }
 
+.black_text {
+  color: black;
+}
 .daypane {
   max-width: 100%;
 }
