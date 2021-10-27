@@ -22,7 +22,7 @@ export default class WeatherDay5 extends React.Component {
     )
       .then((response) => response.json())
       .then((responseData) => {
-        this.setState({ weather: responseData });
+        // this.setState({ weather: responseData });
         this.setState({ dayOneMin: responseData.daily[4].temp.min });
         this.setState({ dayOneMax: responseData.daily[4].temp.max });
         this.setState({ imageicon: responseData.daily[4].weather[0].icon });
