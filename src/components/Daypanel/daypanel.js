@@ -40,6 +40,7 @@ const Daypanel = () => {
 
         <div className="day">
           <h5>{week[curr.getDay() + 1]}</h5>
+
           <WeatherDay2 />
         </div>
 

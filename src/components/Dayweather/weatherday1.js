@@ -37,7 +37,8 @@ export default class WeatherDay1 extends React.Component {
         <img
           className="daypane"
           src={`https://openweathermap.org/img/wn/${imageicon}.png`}
-          alt="weather"
+          alt="weather today"
+          aria-label="weather today"
         ></img>
         <div className="row">
           <h5 className="black_text">

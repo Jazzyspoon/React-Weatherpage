@@ -1,0 +1,11 @@
+.radar {
+  position: relative;
+
+  overflow: hidden;
+}
+
+#radar {
+  border-radius: 10px;
+  width: 700px;
+  height: 300px;
+}

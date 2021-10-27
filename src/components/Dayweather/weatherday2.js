@@ -33,7 +33,8 @@ export default class WeatherDay2 extends React.Component {
         <img
           className="daypane"
           src={`https://openweathermap.org/img/wn/${imageicon}.png`}
-          alt="weather"
+          alt="weather tomorrow"
+          aria-label="weather tomorrow"
         ></img>
         <div className="row">
           <h5>{Math.round((dayOneMax - 273.15) * 1.8 + 32)}°</h5>
