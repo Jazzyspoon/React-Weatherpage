@@ -3,7 +3,7 @@ import "./radar.css";
 const Radar = () => {
   return (
     <div className="radar container-fluid">
-      <h3>Current Radar</h3>
+      <h5 className="radar_text">Current Radar:</h5>
       <iframe
         title="radar"
         id="radar"

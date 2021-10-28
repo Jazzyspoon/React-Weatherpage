@@ -1,7 +1,11 @@
 .radar {
   position: relative;
-
   overflow: hidden;
+}
+
+.radar_text {
+  padding: 0;
+  margin: 10px;
 }
 
 #radar {
@@ -10,6 +14,7 @@
   height: 200px;
   padding: 0;
   margin: 0;
+  border: 2px solid white;
 }
 
 @media screen and (max-width: 650px) {

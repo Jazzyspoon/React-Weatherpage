@@ -38,7 +38,7 @@ export default class WeatherDay2 extends React.Component {
         ></img>
         <div className="row">
           <h5>{Math.round((dayOneMax - 273.15) * 1.8 + 32)}°</h5>
-          <h5 className="grey_text">
+          <h5 className="light-grey_text">
             {Math.round((dayOneMin - 273.15) * 1.8 + 32)}°
           </h5>
         </div>
