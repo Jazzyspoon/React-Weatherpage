@@ -1,13 +1,5 @@
 .App {
   text-align: center;
-}
-
-.town {
-  margin-bottom: -20px;
-  color: rgb(194, 194, 194);
-}
-
-.App-header {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -15,4 +7,21 @@
   justify-content: center;
   color: white;
   background-color: blue;
+  margin: 0;
+  padding: 0;
+}
+
+.town {
+  color: rgb(194, 194, 194);
+}
+
+.App-header {
+  background-color: #222;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  margin: 20px;
+  color: white;
+  border: 2px solid white;
+  border-radius: 20px;
 }

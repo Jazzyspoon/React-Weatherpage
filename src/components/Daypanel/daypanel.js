@@ -34,7 +34,7 @@ const Daypanel = () => {
     <div className="container">
       <div className="row">
         <div className="day grey">
-          <h5 className="grey_text">{week[curr.getDay()]}</h5>
+          <h5 className="grey_text">Today</h5>
           <WeatherDay1 />
         </div>
 
