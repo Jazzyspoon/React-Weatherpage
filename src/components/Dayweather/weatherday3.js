@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export default class WeatherDay3 extends React.Component {
   state = {
@@ -11,12 +11,12 @@ export default class WeatherDay3 extends React.Component {
   }
   componentDidMount() {
     fetch(
-      "https://api.openweathermap.org/data/2.5/onecall?lat=39.61&lon=-105.13&exclude=hourly&appid=777e115b0093ba596689cbd5bd7ed1d6",
+      'https://api.openweathermap.org/data/2.5/onecall?lat=39.61&lon=-105.13&exclude=hourly&appid=777e115b0093ba596689cbd5bd7ed1d6',
       {
-        method: "GET",
+        method: 'GET',
         headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          Accept: "application/json",
+          'Content-Type': 'application/x-www-form-urlencoded',
+          Accept: 'application/json',
         },
       }
     )
@@ -35,13 +35,13 @@ export default class WeatherDay3 extends React.Component {
     return (
       <div>
         <img
-          className="daypane"
+          className='daypane'
           src={`https://openweathermap.org/img/wn/${imageicon}.png`}
-          alt="weather"
+          alt='weather'
         ></img>
-        <div className="row">
+        <div className='row'>
           <h5>{Math.round((dayOneMax - 273.15) * 1.8 + 32)}°</h5>
-          <h5 className="light-grey_text">
+          <h5 className='light-grey_text'>
             {Math.round((dayOneMin - 273.15) * 1.8 + 32)}°
           </h5>
         </div>

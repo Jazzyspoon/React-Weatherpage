@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export default class WeatherDay1 extends React.Component {
   state = {
@@ -9,14 +9,15 @@ export default class WeatherDay1 extends React.Component {
     let f = (k - 273.15) * 1.8 + 32;
     return Math.round(f);
   }
+
   componentDidMount() {
     fetch(
-      "https://api.openweathermap.org/data/2.5/onecall?lat=39.61&lon=-105.13&exclude=hourly&appid=777e115b0093ba596689cbd5bd7ed1d6",
+      'https://api.openweathermap.org/data/2.5/onecall?lat=39.61&lon=-105.13&exclude=hourly&appid=777e115b0093ba596689cbd5bd7ed1d6',
       {
-        method: "GET",
+        method: 'GET',
         headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          Accept: "application/json",
+          'Content-Type': 'application/x-www-form-urlencoded',
+          Accept: 'application/json',
         },
       }
     )
@@ -35,16 +36,16 @@ export default class WeatherDay1 extends React.Component {
     return (
       <div>
         <img
-          className="daypane"
+          className='daypane'
           src={`https://openweathermap.org/img/wn/${imageicon}.png`}
-          alt="weather today"
-          aria-label="weather today"
+          alt='weather today'
+          aria-label='weather today'
         ></img>
-        <div className="row">
-          <h5 className="black_text">
+        <div className='row'>
+          <h5 className='black_text'>
             {Math.round((dayOneMax - 273.15) * 1.8 + 32)}°
           </h5>
-          <h5 className="grey_text">
+          <h5 className='grey_text'>
             {Math.round((dayOneMin - 273.15) * 1.8 + 32)}°
           </h5>
         </div>
