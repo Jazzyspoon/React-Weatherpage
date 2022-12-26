@@ -2,6 +2,6 @@ To keep my skills fresh, I created this React-Based 5 day weather forecast app u
 
 If you should wish to clone this, run 'npm install' and then 'npm start'. It should open up on localhost3000. The API is 'GET' only and the key will occasionally expire, so I recommend getting your own free key at openweathermap.org.
 
-This uses React 17, JS, HTML, Boostrap 5, and CSS.
+This uses React 18, JS, HTML, Boostrap 5, and CSS.
 
 <img src="https://github.com/Jazzyspoon/React-Weatherpage/blob/master/src/components/images/updated%20look.png"></img>
