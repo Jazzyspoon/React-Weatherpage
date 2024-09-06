@@ -11,7 +11,7 @@ export default class WeatherDay4 extends React.Component {
   }
   componentDidMount() {
     fetch(
-      'https://api.openweathermap.org/data/2.5/onecall?lat=39.61&lon=-105.13&exclude=hourly&appid=777e115b0093ba596689cbd5bd7ed1d6',
+      'https://api.openweathermap.org/data/3.0/onecall?lat=39.61&lon=-105.13&exclude=hourly&appid=777e115b0093ba596689cbd5bd7ed1d6',
       {
         method: 'GET',
         headers: {
