@@ -6,7 +6,11 @@ import WeatherDay3 from '../Dayweather/weatherday3';
 import WeatherDay4 from '../Dayweather/weatherday4';
 import WeatherDay5 from '../Dayweather/weatherday5';
 
-const Daypanel = () => {
+const Daypanel = (props) => {
+  const latitude = props.data.latitude;
+  const longitude = props.data.longitude;
+  const data = { latitude, longitude };
+
   let curr = new Date();
   let today = curr.getDay();
   let week = [
@@ -35,28 +39,28 @@ const Daypanel = () => {
       <div className='row'>
         <div className='day grey'>
           <h5 className='grey_text'>Today</h5>
-          <WeatherDay1 />
+          <WeatherDay1 data={data} />
         </div>
 
         <div className='day'>
           <h5>{week[curr.getDay() + 1]}</h5>
 
-          <WeatherDay2 />
+          <WeatherDay2 data={data} />
         </div>
 
         <div className='day'>
           <h5>{week[curr.getDay() + 2]}</h5>
-          <WeatherDay3 />
+          <WeatherDay3 data={data} />
         </div>
 
         <div className='day'>
           <h5>{week[curr.getDay() + 3]}</h5>
-          <WeatherDay4 />
+          <WeatherDay4 data={data} />
         </div>
 
         <div className='day'>
           <h5>{week[curr.getDay() + 4]}</h5>
-          <WeatherDay5 />
+          <WeatherDay5 data={data} />
         </div>
       </div>
     </div>
