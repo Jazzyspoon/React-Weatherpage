@@ -7,9 +7,17 @@ import WeatherDay4 from '../Dayweather/weatherday4';
 import WeatherDay5 from '../Dayweather/weatherday5';
 
 const Daypanel = (props) => {
-  const latitude = props.data.latitude;
-  const longitude = props.data.longitude;
-  const data = { latitude, longitude };
+  const [data, setData] = React.useState({ latitude: null, longitude: null });
+  //if props update, update the data
+  React.useEffect(
+    () => {
+      const latitude = props.data.latitude;
+      const longitude = props.data.longitude;
+      setData({ latitude, longitude });
+    },
+    [props],
+    [data]
+  );
 
   let curr = new Date();
   let today = curr.getDay();
@@ -34,7 +42,12 @@ const Daypanel = (props) => {
     let day = today + i;
     week.push(day);
   }
-  return (
+
+  return data.latitude === null ? (
+    <div>
+      <h1>Loading...</h1>
+    </div>
+  ) : (
     <div className='container'>
       <div className='row'>
         <div className='day grey'>
@@ -44,7 +57,6 @@ const Daypanel = (props) => {
 
         <div className='day'>
           <h5>{week[curr.getDay() + 1]}</h5>
-
           <WeatherDay2 data={data} />
         </div>
 

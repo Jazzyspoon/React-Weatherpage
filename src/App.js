@@ -33,6 +33,7 @@ function App() {
     if (coords) {
       const newLat = coords.latitude;
       const newLon = coords.longitude;
+
       setLatitude(newLat);
       setLongitude(newLon);
       getTownFromLatLon(newLat, newLon);
@@ -42,13 +43,15 @@ function App() {
   return (
     <div className='App'>
       {/* if no coords, show loader until data loads */}
-      {!coords && <div>Loading...</div>}
+      {!coords && <div>Loading Your Weather, please wait...</div>}
       {/* if coords, show header */}
-      <header className='App-header'>
-        <h2>5-Day Forecast for {myLocation}</h2>
-        <Daypanel data={Geo.coords} />
-        <Radar data={Geo.coords} />
-      </header>
+      {coords && (
+        <header className='App-header'>
+          <h2>5-Day Forecast for {myLocation}</h2>
+          <Daypanel data={Geo.coords} />
+          <Radar data={Geo.coords} />
+        </header>
+      )}
     </div>
   );
 }

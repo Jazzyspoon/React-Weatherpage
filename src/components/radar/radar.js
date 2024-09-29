@@ -5,7 +5,7 @@ const Radar = (props) => {
   const latitude = props.data.latitude - 0.05;
   const longitude = props.data.longitude - 0.011;
   if (!props.data) {
-    return <div>Loading...</div>;
+    return <div>Loading radar...</div>;
   } else {
     return (
       <div className='radar container-fluid'>
