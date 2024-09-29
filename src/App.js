@@ -7,6 +7,7 @@ import { useGeolocated } from 'react-geolocated';
 
 function App() {
   const [myLocation, setMyLocation] = React.useState('Unknown Location');
+  const [myState, setMyState] = React.useState('Unknown State');
   const [latitude, setLatitude] = React.useState(null);
   const [longitude, setLongitude] = React.useState(null);
 
@@ -18,7 +19,9 @@ function App() {
     )
       .then((response) => response.json())
       .then((data) => {
+        debugger;
         setMyLocation(data.locality);
+        setMyState(data.principalSubdivision);
       });
   };
 
@@ -36,6 +39,7 @@ function App() {
 
       setLatitude(newLat);
       setLongitude(newLon);
+
       getTownFromLatLon(newLat, newLon);
     }
   }, [coords]);
@@ -47,7 +51,9 @@ function App() {
       {/* if coords, show header */}
       {coords && (
         <header className='App-header'>
-          <h2>5-Day Forecast for {myLocation}</h2>
+          <h2>
+            5-Day Forecast for {myLocation}, {myState}
+          </h2>
           <Daypanel data={Geo.coords} />
           <Radar data={Geo.coords} />
         </header>
