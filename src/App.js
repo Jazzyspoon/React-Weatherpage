@@ -7,8 +7,8 @@ import { useGeolocated } from 'react-geolocated';
 
 function App() {
   const [myLocation, setMyLocation] = React.useState('Unknown Location');
-  const [latitude, setLatitude] = React.useState(39.74);
-  const [longitude, setLongitude] = React.useState(-104.98);
+  const [latitude, setLatitude] = React.useState(null);
+  const [longitude, setLongitude] = React.useState(null);
 
   Geo.coords = { latitude, longitude };
 
@@ -41,6 +41,9 @@ function App() {
 
   return (
     <div className='App'>
+      {/* if no coords, show loader until data loads */}
+      {!coords && <div>Loading...</div>}
+      {/* if coords, show header */}
       <header className='App-header'>
         <h2>5-Day Forecast for {myLocation}</h2>
         <Daypanel data={Geo.coords} />

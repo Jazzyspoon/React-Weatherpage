@@ -10,7 +10,9 @@ class WeatherDay4 extends Component {
       imageicon: null,
       error: null,
     };
-
+    this.props.data.latitude = Math.round(this.props.data.latitude * 100) / 100;
+    this.props.data.longitude =
+      Math.round(this.props.data.longitude * 100) / 100;
     this.lat = this.props.data.latitude;
     this.lon = this.props.data.longitude;
   }
