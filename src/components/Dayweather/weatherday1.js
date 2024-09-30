@@ -1,4 +1,5 @@
 import React from 'react';
+import { Tooltip } from 'react-tooltip';
 
 const WeatherDay1 = (props) => {
   const [dayOneMin, setDayOneMin] = React.useState(null);
@@ -6,6 +7,7 @@ const WeatherDay1 = (props) => {
   const [imageicon, setImageicon] = React.useState(null);
   const [lat, setLat] = React.useState(null);
   const [lon, setLon] = React.useState(null);
+  const [forecast, setForecast] = React.useState(null);
 
   React.useEffect(() => {
     setLat(Math.round(props.data.latitude * 100) / 100);
@@ -26,12 +28,38 @@ const WeatherDay1 = (props) => {
         setDayOneMin(responseData.daily[0].temp.min);
         setDayOneMax(responseData.daily[0].temp.max);
         setImageicon(responseData.daily[0].weather[0].icon);
+        setForecast(responseData.daily[0].summary);
       })
       .catch((error) => console.log(error));
-  }, [props.data, lat, lon]);
+  }, [props.data, lat, lon, forecast]);
+
+  const todaysDate = new Date().toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+  });
+
+  const tooltipHtml =
+    '<div>' + todaysDate + ':</div><div>' + forecast + '</div>';
 
   return (
-    <div>
+    <div
+      data-tooltip-id='my-tooltip'
+      data-tooltip-html={tooltipHtml}
+      data-tooltip-place='middle'
+    >
+      <Tooltip
+        id='my-tooltip'
+        style={{
+          backgroundColor: 'rgb(0, 255, 30)',
+          color: '#222',
+          padding: '10px',
+          borderRadius: '5px',
+          border: '1px solid #222',
+          textAlign: 'center',
+          maxWidth: '150px',
+        }}
+      />
       <img
         className='daypane'
         src={`https://openweathermap.org/img/wn/${imageicon}.png`}

@@ -19,7 +19,6 @@ function App() {
     )
       .then((response) => response.json())
       .then((data) => {
-        debugger;
         setMyLocation(data.locality);
         setMyState(data.principalSubdivision);
       });
