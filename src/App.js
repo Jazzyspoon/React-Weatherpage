@@ -1,63 +1,98 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import Daypanel from './components/Daypanel/daypanel';
 import Radar from './components/radar/radar';
-import Geo from './components/GeoLocation/geoLocation';
-import { useGeolocated } from 'react-geolocated';
+import { WeatherProvider } from './context/WeatherContext';
+import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
 
 function App() {
-  const [myLocation, setMyLocation] = React.useState('Unknown Location');
-  const [myState, setMyState] = React.useState('Unknown State');
-  const [latitude, setLatitude] = React.useState(null);
-  const [longitude, setLongitude] = React.useState(null);
-
-  Geo.coords = { latitude, longitude };
-
-  const getTownFromLatLon = (lat, lon) => {
-    fetch(
-      `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        setMyLocation(data.locality);
-        setMyState(data.principalSubdivision);
-      });
-  };
-
-  const { coords } = useGeolocated({
-    positionOptions: {
-      enableHighAccuracy: true,
-    },
-    userDecisionTimeout: 500,
+  "use memo"; // Enable React Compiler optimization
+  
+  const [locationData, setLocationData] = useState({
+    latitude: null,
+    longitude: null,
+    error: null,
+    isLoading: true
   });
 
-  React.useEffect(() => {
-    if (coords) {
-      const newLat = coords.latitude;
-      const newLon = coords.longitude;
-
-      setLatitude(newLat);
-      setLongitude(newLon);
-
-      getTownFromLatLon(newLat, newLon);
+  // Get user's location
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          const newLocationData = {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+            error: null,
+            isLoading: false
+          };
+          
+          // Get township name using reverse geocoding
+          try {
+            const response = await fetch(
+              `https://api.openweathermap.org/geo/1.0/reverse?lat=${position.coords.latitude}&lon=${position.coords.longitude}&limit=1&appid=${process.env.REACT_APP_WEATHER_API_KEY || '777e115b0093ba596689cbd5bd7ed1d6'}`
+            );
+            
+            if (response.ok) {
+              const data = await response.json();
+              if (data && data.length > 0) {
+                newLocationData.township = data[0].name;
+                if (data[0].state) {
+                  newLocationData.township += `, ${data[0].state}`;
+                }
+              }
+            }
+          } catch (error) {
+            console.error('Error getting location name:', error);
+          }
+          
+          setLocationData(newLocationData);
+          
+          // Dispatch event to notify WeatherContext
+          window.dispatchEvent(new CustomEvent('locationUpdate', { 
+            detail: newLocationData 
+          }));
+        },
+        (error) => {
+          console.error('Error getting location:', error);
+          setLocationData({
+            latitude: null,
+            longitude: null,
+            error: `Location error: ${error.message}`,
+            isLoading: false
+          });
+        }
+      );
+    } else {
+      setLocationData({
+        latitude: null,
+        longitude: null,
+        error: 'Geolocation is not supported by this browser.',
+        isLoading: false
+      });
     }
-  }, [coords]);
+  }, []);
 
   return (
-    <div className='App'>
-      {/* if no coords, show loader until data loads */}
-      {!coords && <div>Loading Your Weather, please wait...</div>}
-      {/* if coords, show header */}
-      {coords && (
-        <header className='App-header'>
-          <h2>
-            5-Day Forecast for {myLocation}, {myState}
-          </h2>
-          <Daypanel data={Geo.coords} />
-          <Radar data={Geo.coords} />
-        </header>
-      )}
-    </div>
+    <ErrorBoundary fallback={<div className="app-error">The application encountered a critical error</div>}>
+      <WeatherProvider>
+        <div className="App">
+          <header className="App-header">
+            <h1>Weather Forecast for {locationData.township || (locationData.latitude ? `${locationData.latitude.toFixed(2)}°, ${locationData.longitude.toFixed(2)}°` : 'your location')}</h1>
+            {locationData.error && (
+              <div className="location-error">
+                {locationData.error}
+                <p>Using default location instead.</p>
+              </div>
+            )}
+          </header>
+          <main>
+            <Daypanel />
+            <Radar />
+          </main>
+        </div>
+      </WeatherProvider>
+    </ErrorBoundary>
   );
 }
 

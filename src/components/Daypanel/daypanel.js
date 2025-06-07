@@ -1,83 +1,69 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import './daypanel.css';
-import WeatherDay1 from '../Dayweather/weatherday1';
-import WeatherDay2 from '../Dayweather/weatherday2';
-import WeatherDay3 from '../Dayweather/weatherday3';
-import WeatherDay4 from '../Dayweather/weatherday4';
-import WeatherDay5 from '../Dayweather/weatherday5';
+import WeatherDay from '../Dayweather/WeatherDay';
+import { useWeather } from '../../context/WeatherContext';
+import { getShortDayNameForOffset } from '../../utils/weatherUtils';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 
-const Daypanel = (props) => {
-  const [data, setData] = React.useState({ latitude: null, longitude: null });
-  //if props update, update the data
-  React.useEffect(
-    () => {
-      const latitude = props.data.latitude;
-      const longitude = props.data.longitude;
-      setData({ latitude, longitude });
-    },
-    [props],
-    [data]
-  );
+const Daypanel = () => {
+  "use memo"; // Enable React Compiler optimization
 
-  let curr = new Date();
-  let today = curr.getDay();
+  const { coordinates, weatherData } = useWeather();
 
-  let week = [
-    'Sun',
-    'Mon',
-    'Tue',
-    'Wed',
-    'Thu',
-    'Fri',
-    'Sat',
-    'Sun',
-    'Mon',
-    'Tue',
-    'Wed',
-    'Thu',
-    'Fri',
-    'Sat',
-  ];
-  // going through the weekdays
-  for (let i = 0; week.length < 7; i++) {
-    let day = today + i;
-    week.push(day);
+  // Calculate weekdays once using useMemo
+  const weekdays = useMemo(() => {
+    return Array.from({ length: 5 }, (_, i) => getShortDayNameForOffset(i));
+  }, []);
+
+  if (weatherData.isLoading && !weatherData.daily.length) {
+    return <div className="loading-container"><h3>Loading weather data...</h3></div>;
   }
 
-  return data.latitude === null ? (
-    <div>
-      <h1>Loading...</h1>
-    </div>
-  ) : (
+  if (weatherData.error && !weatherData.daily.length) {
+    return <div className="error-container"><h3>Error loading weather: {weatherData.error}</h3></div>;
+  }
+
+  if (coordinates.latitude === null) {
+    return <div className="loading-container"><h3>Waiting for location data...</h3></div>;
+  }
+
+  return (
     <div className='container'>
       <div className='row'>
         <div className='day grey'>
           <h5 className='grey_text'>Today</h5>
-          <WeatherDay1 data={data} />
+          <WeatherDay data={coordinates} dayIndex={0} />
         </div>
 
         <div className='day'>
-          <h5>{week[curr.getDay() + 1]}</h5>
-          <WeatherDay2 data={data} />
+          <h5>{weekdays[1]}</h5>
+          <WeatherDay data={coordinates} dayIndex={1} />
         </div>
 
         <div className='day'>
-          <h5>{week[curr.getDay() + 2]}</h5>
-          <WeatherDay3 data={data} />
+          <h5>{weekdays[2]}</h5>
+          <WeatherDay data={coordinates} dayIndex={2} />
         </div>
 
         <div className='day'>
-          <h5>{week[curr.getDay() + 3]}</h5>
-          <WeatherDay4 data={data} />
+          <h5>{weekdays[3]}</h5>
+          <WeatherDay data={coordinates} dayIndex={3} />
         </div>
 
         <div className='day'>
-          <h5>{week[curr.getDay() + 4]}</h5>
-          <WeatherDay5 data={data} />
+          <h5>{weekdays[4]}</h5>
+          <WeatherDay data={coordinates} dayIndex={4} />
         </div>
       </div>
     </div>
   );
 };
 
-export default Daypanel;
+// Wrap with ErrorBoundary for better error handling
+const DaypanelWithErrorBoundary = () => (
+  <ErrorBoundary fallback={<div className="error-container"><h3>Something went wrong with the weather panel</h3></div>}>
+    <Daypanel />
+  </ErrorBoundary>
+);
+
+export default DaypanelWithErrorBoundary;
