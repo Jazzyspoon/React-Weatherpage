@@ -2,18 +2,24 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 5px;
-  font-size: 0.9rem;
+  margin-top: 8px;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  padding: 4px 8px;
+  backdrop-filter: blur(5px);
 }
 
 .rain-icon {
-  margin-right: 3px;
+  margin-right: 4px;
   font-size: 0.8rem;
+  color: #87CEEB;
 }
 
 .rain-chance {
-  color: #272f36;
-  font-weight: bold;
+  color: white;
+  font-weight: 600;
 }
 
 .weather-day-container {
@@ -21,23 +27,93 @@
   flex-direction: column;
   align-items: center;
   min-height: 115px;
-  padding: 0;
-  margin: 10px;
+  padding: 12px 8px;
+  margin: 0;
+  justify-content: space-between;
 }
 
 .temp-row {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  margin: 0;
-  width: 100px;
-  height: 60px;
+  margin: 5px 0;
+  width: 100%;
   text-align: center;
-  justify-content: space-evenly;
-  padding: 0 0 1px;
+  justify-content: space-around;
+  padding: 0;
+  gap: 8px;
+}
+
+.temp-row span {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 h5 {
   font-size: 1rem;
   padding: 0;
+  margin: 0 0 8px 0;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Loading and error states */
+.weather-loading, .weather-error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.weather-error {
+  color: #ffcccb;
+}
+
+.weather-day-loading {
+  padding: 10px;
+}
+
+.weather-day-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 10px;
+  color: rgba(255, 204, 203, 0.9);
+}
+
+.weather-day-error .error-icon {
+  font-size: 1.2rem;
+}
+
+.weather-day-error .error-text {
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+/* Mobile styles */
+@media screen and (max-width: 480px) {
+  .weather-day-container {
+    padding: 10px 6px;
+  }
+
+  .precipitation {
+    font-size: 0.75rem;
+    padding: 3px 6px;
+    margin-top: 6px;
+  }
+
+  .temp-row span {
+    font-size: 0.8rem;
+  }
+
+  h5 {
+    font-size: 0.9rem;
+    margin: 0 0 6px 0;
+  }
 }

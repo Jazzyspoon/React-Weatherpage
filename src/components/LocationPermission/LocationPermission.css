@@ -1,0 +1,157 @@
+.location-permission {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  margin: 20px auto;
+  max-width: 500px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  color: white;
+}
+
+.location-icon {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  animation: pulse 2s infinite;
+}
+
+.location-permission h2 {
+  margin: 0 0 15px 0;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: white;
+}
+
+.location-permission p {
+  margin: 0 0 30px 0;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 400px;
+}
+
+.location-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 300px;
+  margin-bottom: 20px;
+}
+
+.location-button {
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  width: 100%;
+}
+
+.location-button.primary {
+  background: linear-gradient(135deg, #4CAF50, #45a049);
+  color: white;
+  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+}
+
+.location-button.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+}
+
+.location-button.secondary {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(5px);
+}
+
+.location-button.secondary:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-1px);
+}
+
+.location-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.location-privacy {
+  margin-top: 10px;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.location-privacy small {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.location-loading {
+  padding: 60px 20px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  margin: 20px auto;
+  max-width: 400px;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+/* Mobile adjustments */
+@media screen and (max-width: 480px) {
+  .location-permission {
+    padding: 30px 15px;
+    margin: 15px;
+    border-radius: 15px;
+  }
+  
+  .location-icon {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+  }
+  
+  .location-permission h2 {
+    font-size: 1.5rem;
+    margin-bottom: 12px;
+  }
+  
+  .location-permission p {
+    font-size: 0.9rem;
+    margin-bottom: 25px;
+  }
+  
+  .location-buttons {
+    gap: 10px;
+    max-width: 280px;
+  }
+  
+  .location-button {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+  
+  .location-privacy small {
+    font-size: 0.8rem;
+  }
+}

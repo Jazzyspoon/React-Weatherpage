@@ -2,7 +2,7 @@
 
 // Convert Kelvin to Fahrenheit
 export const kelvinToFahrenheit = (kelvin) => {
-  return kelvin ? Math.round((kelvin - 273.15) * 1.8 + 32) : null;
+  return kelvin !== null && kelvin !== undefined ? Math.round((kelvin - 273.15) * 1.8 + 32) : null;
 };
 
 // Calculate date for a specific day offset (0 = today, 1 = tomorrow, etc.)

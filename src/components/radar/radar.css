@@ -1,25 +1,63 @@
 .radar {
   position: relative;
   overflow: hidden;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 10px;
+  box-sizing: border-box;
 }
 
 .radar_text {
   padding: 0;
-  margin: 10px;
+  margin: 10px 0;
+  font-size: 1.2rem;
+  font-weight: 600;
 }
 
 #radar {
   border-radius: 10px;
-  min-width: 650px;
+  width: 100%;
+  max-width: 650px;
   min-height: 350px;
+  height: 50vh;
+  max-height: 500px;
   padding: 0;
-  margin: 0;
+  margin: 0 auto;
   border: 2px solid white;
+  display: block;
 }
 
-@media screen and (max-width: 650px) {
+/* Tablet styles */
+@media screen and (max-width: 768px) {
+  .radar {
+    padding: 0 15px;
+  }
+
   #radar {
-    min-width: 80%;
-    min-height: 400px;
+    height: 45vh;
+    min-height: 300px;
+  }
+
+  .radar_text {
+    font-size: 1.1rem;
+  }
+}
+
+/* Mobile styles */
+@media screen and (max-width: 480px) {
+  .radar {
+    padding: 0 10px;
+  }
+
+  #radar {
+    height: 40vh;
+    min-height: 280px;
+    border-radius: 8px;
+  }
+
+  .radar_text {
+    font-size: 1rem;
+    margin: 8px 0;
   }
 }

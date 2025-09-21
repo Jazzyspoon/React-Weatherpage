@@ -4,6 +4,8 @@ import WeatherDay from '../Dayweather/WeatherDay';
 import { useWeather } from '../../context/WeatherContext';
 import { getShortDayNameForOffset } from '../../utils/weatherUtils';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
 const Daypanel = () => {
   "use memo"; // Enable React Compiler optimization
@@ -16,15 +18,34 @@ const Daypanel = () => {
   }, []);
 
   if (weatherData.isLoading && !weatherData.daily.length) {
-    return <div className="loading-container"><h3>Loading weather data...</h3></div>;
+    return (
+      <LoadingSpinner
+        size="large"
+        message="Loading weather data..."
+        className="weather-loading"
+      />
+    );
   }
 
   if (weatherData.error && !weatherData.daily.length) {
-    return <div className="error-container"><h3>Error loading weather: {weatherData.error}</h3></div>;
+    return (
+      <ErrorMessage
+        title="Weather Data Unavailable"
+        message={`Unable to load weather information: ${weatherData.error}`}
+        type="error"
+        className="weather-error"
+      />
+    );
   }
 
   if (coordinates.latitude === null) {
-    return <div className="loading-container"><h3>Waiting for location data...</h3></div>;
+    return (
+      <LoadingSpinner
+        size="medium"
+        message="Waiting for location data..."
+        className="location-loading"
+      />
+    );
   }
 
   return (
@@ -32,27 +53,27 @@ const Daypanel = () => {
       <div className='row'>
         <div className='day grey'>
           <h5 className='grey_text'>Today</h5>
-          <WeatherDay data={coordinates} dayIndex={0} />
+          <WeatherDay dayIndex={0} />
         </div>
 
         <div className='day'>
           <h5>{weekdays[1]}</h5>
-          <WeatherDay data={coordinates} dayIndex={1} />
+          <WeatherDay dayIndex={1} />
         </div>
 
         <div className='day'>
           <h5>{weekdays[2]}</h5>
-          <WeatherDay data={coordinates} dayIndex={2} />
+          <WeatherDay dayIndex={2} />
         </div>
 
         <div className='day'>
           <h5>{weekdays[3]}</h5>
-          <WeatherDay data={coordinates} dayIndex={3} />
+          <WeatherDay dayIndex={3} />
         </div>
 
         <div className='day'>
           <h5>{weekdays[4]}</h5>
-          <WeatherDay data={coordinates} dayIndex={4} />
+          <WeatherDay dayIndex={4} />
         </div>
       </div>
     </div>

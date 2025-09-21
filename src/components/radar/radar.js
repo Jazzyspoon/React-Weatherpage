@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import './radar.css';
 import { useWeather } from '../../context/WeatherContext';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 
 const Radar = () => {
     "use memo"; // Enable React Compiler optimization
@@ -29,7 +30,13 @@ const Radar = () => {
     
     // Early return if no data is available
     if (!adjustedCoordinates) {
-        return <div className="loading-container"><h3>Loading radar...</h3></div>;
+        return (
+            <LoadingSpinner
+                size="medium"
+                message="Loading radar..."
+                className="radar-loading"
+            />
+        );
     }
     
     return (

@@ -1,8 +1,22 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
+// Mock geolocation
+const mockGeolocation = {
+  getCurrentPosition: jest.fn(),
+  watchPosition: jest.fn()
+};
+
+global.navigator.geolocation = mockGeolocation;
+
+test('renders weather app', () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  const locationHeading = screen.getByRole('heading', { name: /Location Access/i });
+  expect(locationHeading).toBeInTheDocument();
+});
+
+test('shows location permission component initially', () => {
+  render(<App />);
+  const allowButton = screen.getByText(/Allow Location Access/i);
+  expect(allowButton).toBeInTheDocument();
 });

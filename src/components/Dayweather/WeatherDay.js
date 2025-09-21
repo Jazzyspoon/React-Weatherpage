@@ -1,107 +1,78 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { Tooltip } from 'react-tooltip';
 import { kelvinToFahrenheit, getDateForOffset } from '../../utils/weatherUtils';
+import { useWeather } from '../../context/WeatherContext';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 import './WeatherDay.css';
 
-// Get API key from environment variable or use fallback for development
-const API_KEY = process.env.REACT_APP_WEATHER_API_KEY || '777e115b0093ba596689cbd5bd7ed1d6';
+// This component now gets data from the WeatherContext instead of making its own API calls
 
-const WeatherDay = ({ data, dayIndex }) => {
+const WeatherDay = ({ dayIndex }) => {
   "use memo"; // Enable React Compiler optimization
 
-  const [weatherData, setWeatherData] = useState({
-    min: null,
-    max: null,
-    imageIcon: null,
-    forecast: null,
-    precipChance: null,
-    isLoading: true,
-    error: null
-  });
-
-  const [coordinates, setCoordinates] = useState({
-    lat: null,
-    lon: null
-  });
+  const { weatherData: contextWeatherData } = useWeather();
 
   // Calculate date for the specified day
   const date = useMemo(() => getDateForOffset(dayIndex), [dayIndex]);
 
-  // Format coordinates once when props change
-  useEffect(() => {
-    if (data?.latitude && data?.longitude) {
-      setCoordinates({
-        lat: Math.round(data.latitude * 100) / 100,
-        lon: Math.round(data.longitude * 100) / 100
-      });
+  // Get weather data for this specific day from context
+  const dayWeatherData = useMemo(() => {
+    if (!contextWeatherData.daily || contextWeatherData.daily.length <= dayIndex) {
+      return {
+        min: null,
+        max: null,
+        imageIcon: null,
+        forecast: null,
+        precipChance: null,
+        isLoading: contextWeatherData.isLoading,
+        error: contextWeatherData.error
+      };
     }
-  }, [data]);
 
-  // Fetch weather data when coordinates change
-  useEffect(() => {
-    const { lat, lon } = coordinates;
-
-    if (lat === null || lon === null) return;
-
-    const fetchWeatherData = async () => {
-      try {
-        setWeatherData(prev => ({ ...prev, isLoading: true, error: null }));
-        
-        const response = await fetch(
-          `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=hourly&appid=${API_KEY}`,
-          {
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded',
-              'Accept': 'application/json',
-            },
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error(`Weather API error: ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        setWeatherData({
-          min: data.daily[dayIndex].temp.min,
-          max: data.daily[dayIndex].temp.max,
-          imageIcon: data.daily[dayIndex].weather[0].icon,
-          forecast: data.daily[dayIndex].summary,
-          precipChance: Math.round(data.daily[dayIndex].pop * 100), // pop = probability of precipitation (0-1)
-          isLoading: false,
-          error: null
-        });
-      } catch (error) {
-        console.error('Failed to fetch weather data:', error);
-        setWeatherData(prev => ({ 
-          ...prev, 
-          isLoading: false, 
-          error: error.message 
-        }));
-      }
+    const dayData = contextWeatherData.daily[dayIndex];
+    return {
+      min: dayData.temp.min,
+      max: dayData.temp.max,
+      imageIcon: dayData.weather[0].icon,
+      forecast: dayData.summary,
+      precipChance: Math.round(dayData.pop * 100),
+      isLoading: false,
+      error: null
     };
-
-    fetchWeatherData();
-  }, [coordinates, dayIndex]);
+  }, [contextWeatherData, dayIndex]);
 
   // Memoize tooltip content
   const tooltipHtml = useMemo(() => {
-    if (weatherData.error) {
+    if (dayWeatherData.error) {
       return `<div>Error loading forecast</div>`;
     }
-    return `<div>${date}:</div><div>${weatherData.forecast || 'Loading forecast...'}</div>${weatherData.precipChance !== null ? `<div>Rain: ${weatherData.precipChance}%</div>` : ''}`;
-  }, [date, weatherData.forecast, weatherData.precipChance, weatherData.error]);
+    return `<div>${date}:</div><div>${dayWeatherData.forecast || 'Loading forecast...'}</div>${dayWeatherData.precipChance !== null ? `<div>Rain: ${dayWeatherData.precipChance}%</div>` : ''}`;
+  }, [date, dayWeatherData.forecast, dayWeatherData.precipChance, dayWeatherData.error]);
 
-  const { max, min, imageIcon, precipChance, isLoading, error } = weatherData;
+  const { max, min, imageIcon, precipChance, isLoading, error } = dayWeatherData;
 
   if (isLoading && !imageIcon) {
-    return <div className="weather-loading">Loading...</div>;
+    return (
+      <div className="weather-day-container">
+        <LoadingSpinner
+          size="small"
+          message=""
+          className="weather-day-loading"
+        />
+      </div>
+    );
   }
 
   if (error && !imageIcon) {
-    return <div className="weather-error">Unable to load weather data</div>;
+    return (
+      <div className="weather-day-container">
+        <div className="weather-day-error">
+          <span className="error-icon">⚠️</span>
+          <span className="error-text">Error</span>
+        </div>
+      </div>
+    );
   }
 
   return (
